@@ -1,6 +1,6 @@
 # WebTLO-Mobile
 
-Порт **Linux**-версии [WebTLO](https://github.com/keepers-team/webtlo/) на **Android**.
+Порт `Linux`-версии [WebTLO](https://github.com/keepers-team/webtlo/) на `Android`.
 
 ## Варианты использования WebTLO-Mobile:
 
