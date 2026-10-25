@@ -53,7 +53,7 @@ php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 ## Частые ошибки
 
 **`php: command not found`**
-PHP не установлен. Выполните `pkg install php -y`, затем проверьте `php -v`.
+Выполните `pkg install php -y`.
 
 **`unzip: command not found`**
 Выполните `pkg install unzip -y`.
