@@ -11,7 +11,7 @@
 4. Распакуйте архив:
    ```bash
    cd ~
-   cp ~/storage/emulated/0/downloads/webtlo.zip ~/
+   cp ~/storage/emulated/0/download/webtlo.zip ~/
    unzip webtlo.zip
    cd webtlo.local
    ```
