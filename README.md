@@ -2,7 +2,7 @@
 
 Порт **Linux**-версии [WebTLO](https://github.com/keepers-team/webtlo/) на **Android**.
 
-## Варианты использования [WebTLO](https://github.com/keepers-team/webtlo/):
+## Варианты использования WebTLO-Mobile:
 
 [APK-файл (лёгкий и простой способ)](https://github.com/keepers-team/webtlo/releases/) **ИЛИ** [Termux (тяжёлый и более сложный способ)](TERMUX.md)
 
