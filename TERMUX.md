@@ -1,52 +1,51 @@
 # WebTLO на Android через Termux
 
 1. Установите Termux из F-Droid: https://f-droid.org/en/packages/com.termux/
-2. Скачайте **webtlo.zip** (**webtlo-win.zip** не подойдёт, он для Windows): https://github.com/keepers-team/webtlo/releases/latest/
-3. Выполните:
+2. Скачайте архив `webtlo.zip` со страницы релизов: https://github.com/keepers-team/webtlo/releases/latest/
+   Нужен файл, который называется `webtlo.zip`. Файл `webtlo-win.zip` не подойдёт, он для Windows.
+3. Откройте Termux и выполните:
    ```bash
    pkg update && pkg upgrade -y
    pkg install php unzip -y
    termux-setup-storage
    ```
-4. Запросите и разрешите доступ :
+   Подтвердите разрешение на доступ к файлам.
+4. Проверьте, что файл виден:
    ```bash
-   ls ~
-   termux-setup-storage
-   ```
-5. Проверьте файл:
-   ```bash
-   ls ~/storage
-   ls ~/storage/downloads
    ls ~/storage/downloads/webtlo.zip
    ```
-6. Распакуйте файл:
+   Если команда выводит имя файла, всё в порядке. Если «No such file», проверьте имя командой `ls ~/storage/downloads`.
+5. Скопируйте и распакуйте архив:
    ```bash
-   cp ~/storage/downloads/webtlo.zip ~/
    cd ~
+   cp ~/storage/downloads/webtlo.zip ~/
    unzip webtlo.zip
    cd webtlo.local
    ```
-   
-7. Подготовьте папки:
+6. Подготовьте папки:
    ```bash
    chmod +x bin/webtlo
    mkdir -p data
    ```
-8. Запустите:
+7. Запустите сервер:
    ```bash
-   php -S 127.0.0.1:8080 -t public
+   termux-wake-lock
+   php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
    ```
-9. Откройте в браузере `http://127.0.0.1:8080`.
+8. Откройте в браузере `http://127.0.0.1:8080`. Обязательно с `http://`, а не `https://`.
 
 > **Не закрывайте Termux, пока программа работает.**
 
-После перезапуска Termux нужно снова выполнить только запуск сервера:
+## После перезапуска Termux
+
+Установку и распаковку повторять не нужно. Достаточно выполнить:
+
 ```bash
 cd ~/webtlo.local
 termux-wake-lock
 php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 ```
 
-# Обновление в будущем
+## Обновление в будущем
 
-Перед заменой файлов сохраните папку data (там база и конфиг), затем распакуйте новую версию и верните data на место.
+Перед заменой файлов сохраните папку `data` (там база и конфиг), затем распакуйте новую версию и верните `data` на место.
