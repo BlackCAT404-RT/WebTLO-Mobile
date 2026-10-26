@@ -3,11 +3,20 @@
 1. Установите Termux из F-Droid: https://f-droid.org/ru/packages/com.termux/
 2. Скачайте архив `webtlo.zip` со страницы релизов: https://github.com/keepers-team/webtlo/releases/latest/
    Нужен файл, который называется `webtlo.zip`. Файл `webtlo-win.zip` не подойдёт, он для Windows.
-3. Откройте Termux и выполните:
+3. Подключитесь к интернету и желательно включить VPN.
+4. Откройте Termux и выполните (где вас попросят выбрать букву, пишите `n`):
 ```bash
 pkg update -y && pkg upgrade -y
 pkg install -y php unzip curl
+has_storage() { touch /storage/emulated/0/.webtlo_test 2>/dev/null && rm -f /storage/emulated/0/.webtlo_test; }
+if ! has_storage; then
 termux-setup-storage
+for i in $(seq 1 60); do
+has_storage && break
+sleep 2
+done
+fi
+has_storage || { echo "Нет доступа к хранилищу. Выдай разрешение: Настройки → Приложения → Termux → Разрешения и запусти скрипт снова."; exit 1; }
 BASE=/storage/emulated/0/WebTLOMobile
 mkdir -p "$BASE" && cd "$BASE" || exit 1
 curl -fL --retry 5 --connect-timeout 10 -o webtlo.zip "https://github.com/keepers-team/webtlo/releases/latest/download/webtlo.zip" || { echo "Ошибка загрузки архива"; exit 1; }
