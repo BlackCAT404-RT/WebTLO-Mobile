@@ -4,7 +4,7 @@
 2. Скачайте архив `webtlo.zip` со страницы релизов: https://github.com/keepers-team/webtlo/releases/latest/
    Нужен файл, который называется `webtlo.zip`. Файл `webtlo-win.zip` не подойдёт, он для Windows.
 3. Подключитесь к интернету и желательно включить VPN.
-4. Откройте Termux и выполните (где вас попросят выбрать букву, пишите `n`):
+4. Откройте Termux и выполните: (просто ждите, где вас попросят разрешения, разрешайте и где попросят выбрать букву, пишите `n`)
 ```bash
 pkg update -y && pkg upgrade -y
 pkg install -y php unzip curl
