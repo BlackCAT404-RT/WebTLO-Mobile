@@ -12,19 +12,17 @@
    Подтвердите разрешение на доступ к файлам.
 4. Проверьте, что файл виден:
    ```bash
-   ls ~/storage/downloads/webtlo.zip
+   ls /storage/emulated/0/Download/webtlo.zip
    ```
-   Если команда выводит имя файла, всё в порядке. Если «No such file», проверьте имя командой `ls ~/storage/downloads`.
-5. Скопируйте и распакуйте архив:
+   Если команда выводит имя файла, всё в порядке. Если «No such file», проверьте имя командой `ls /storage/emulated/0/Download`.
+5. Распакуйте архив в папку «Загрузки»:
    ```bash
-   cd ~
-   cp ~/storage/downloads/webtlo.zip ~/
-   unzip webtlo.zip
-   cd webtlo.local
+   unzip /storage/emulated/0/Download/webtlo.zip -d /storage/emulated/0/Download/webtlo
+   cd /storage/emulated/0/Download/webtlo/webtlo.local
    ```
+   Готовая программа будет в папке `Загрузки/webtlo/webtlo.local`, её видно в любом файловом менеджере.
 6. Подготовьте папки:
    ```bash
-   chmod +x bin/webtlo
    mkdir -p data
    ```
 7. Запустите сервер:
@@ -41,14 +39,14 @@
 Установку и распаковку повторять не нужно. Достаточно выполнить:
 
 ```bash
-cd ~/webtlo.local
+cd /storage/emulated/0/Download/webtlo/webtlo.local
 termux-wake-lock
 php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 ```
 
 ## Обновление в будущем
 
-Перед заменой файлов сохраните папку `data` (там база и конфиг), затем распакуйте новую версию и верните `data` на место.
+Перед заменой файлов сохраните папку `data` (там база и конфиг), затем распакуйте новую версию в ту же папку `Загрузки/webtlo` и верните `data` на место. Удобнее всего сделать это через файловый менеджер.
 
 ## Частые ошибки
 
@@ -58,17 +56,28 @@ php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 **`unzip: command not found`**
 Выполните `pkg install unzip -y`.
 
-**`ls: cannot access '.../storage/downloads'`**
+**`ls: cannot access '/storage/emulated/0/Download'`**
 Доступ к файлам не выдан. Выполните `termux-setup-storage` и нажмите «Разрешить». Если окна не было, включите разрешение вручную: Настройки Android → Приложения → Termux → Разрешения → Файлы и мультимедиа.
 
 **`Соединение было сброшено` в браузере**
 Сервер не запущен или адрес открыт через `https://`. Откройте именно `http://127.0.0.1:8080` и проверьте, что в Termux написано `Development Server ... started`.
 
 **`Address already in use`**
-Порт 8080 занят другим процессом. Запустите сервер на другом порту, например `php -S 127.0.0.1:8090 -t public`, и откройте `http://127.0.0.1:8090`.
+Порт 8080 занят другим процессом. Запустите сервер на другом порту, например `php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8090 -t public`, и откройте `http://127.0.0.1:8090`.
 
 **`Failed opening required .../vendor/autoload.php`**
-Архив распакован не полностью. Удалите папку `webtlo.local` (`rm -rf ~/webtlo.local`) и повторите распаковку.
+Архив распакован не полностью. Удалите папку `Загрузки/webtlo` и повторите распаковку:
+```bash
+rm -rf /storage/emulated/0/Download/webtlo
+unzip /storage/emulated/0/Download/webtlo.zip -d /storage/emulated/0/Download/webtlo
+```
 
 **`Deprecated: Method PDO::sqliteCreateFunction()...`**
 Это предупреждение, а не ошибка, программа работает. Чтобы оно не мешало, запускайте сервер командой из инструкции с `-d error_reporting="E_ALL & ~E_DEPRECATED"`.
+
+**`SQLSTATE[HY000]: General error` или `database is locked`**
+Папка `Загрузки` может плохо работать с базой SQLite. Если такое случилось, распакуйте архив в домашнюю папку Termux и запускайте программу оттуда:
+```bash
+unzip /storage/emulated/0/Download/webtlo.zip -d ~
+cd ~/webtlo.local
+```
