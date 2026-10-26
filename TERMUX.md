@@ -17,15 +17,15 @@ sleep 2
 done
 fi
 has_storage || { echo "Нет доступа к хранилищу. Выдай разрешение: Настройки → Приложения → Termux → Разрешения и запусти скрипт снова."; exit 1; }
-BASE=/storage/emulated/0/WebTLOMobile
+BASE=/storage/emulated/0/webtlo
 mkdir -p "$BASE" && cd "$BASE" || exit 1
 curl -fL --retry 5 --connect-timeout 10 -o webtlo.zip "https://github.com/keepers-team/webtlo/releases/latest/download/webtlo.zip" || { echo "Ошибка загрузки архива"; exit 1; }
-unzip -oq webtlo.zip -d webtlo || { echo "Архив повреждён или не распакован"; exit 1; }
+unzip -oq webtlo.zip -d "$BASE" || { echo "Архив повреждён или не распакован"; exit 1; }
 rm -f webtlo.zip
-APP_DIR=$(dirname "$(find "$BASE/webtlo" -type d -name public -print -quit)")
+APP_DIR=$(dirname "$(find "$BASE" -maxdepth 3 -type d -name public -print -quit)")
 if [ "$APP_DIR" = "." ] || [ ! -d "$APP_DIR" ]; then
-echo "Не найдена папка с public. Содержимое архива:"
-ls -R "$BASE/webtlo" | head -50
+echo "Не найдена папка с public. Содержимое:"
+ls -R "$BASE" | head -50
 exit 1
 fi
 cd "$APP_DIR" || exit 1
