@@ -1,6 +1,6 @@
 # WebTLO на Android через Termux
 
-1. Установите Termux из F-Droid: https://f-droid.org/en/packages/com.termux/
+1. Установите Termux из F-Droid: https://f-droid.org/ru/packages/com.termux/
 2. Скачайте архив `webtlo.zip` со страницы релизов: https://github.com/keepers-team/webtlo/releases/latest/
    Нужен файл, который называется `webtlo.zip`. Файл `webtlo-win.zip` не подойдёт, он для Windows.
 3. Откройте Termux и выполните:
