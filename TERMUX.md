@@ -42,7 +42,7 @@ php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 Всё выше описанное повторять не нужно. Достаточно выполнить:
 
 ```bash
-cd /storage/emulated/0/Download/webtlo/webtlo.local
+cd /storage/emulated/0/webtlo/webtlo.local
 termux-wake-lock
 php -d error_reporting="E_ALL & ~E_DEPRECATED" -S 127.0.0.1:8080 -t public
 ```
