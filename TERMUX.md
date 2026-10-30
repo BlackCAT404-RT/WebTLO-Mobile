@@ -7,7 +7,7 @@
 > **Когда попросят вписать букву, пишите `n`. Соглашайтесь со всеми запросами на разрешения. Когда вас перекинет в настройки потребления Termux, выберете `Нет ограничений`.
 ```bash
 pkg update -y && pkg upgrade -y
-pkg install -y php unzip curl
+pkg install -y php unzip curl jq
 has_storage() { touch /storage/emulated/0/.webtlo_test 2>/dev/null && rm -f /storage/emulated/0/.webtlo_test; }
 if ! has_storage; then
 termux-setup-storage
@@ -22,6 +22,12 @@ mkdir -p "$BASE" && cd "$BASE" || exit 1
 curl -fL --retry 5 --connect-timeout 10 -o webtlo.zip "https://github.com/keepers-team/webtlo/releases/latest/download/webtlo.zip" || { echo "Ошибка загрузки архива"; exit 1; }
 unzip -oq webtlo.zip -d "$BASE" || { echo "Архив повреждён или не распакован"; exit 1; }
 rm -f webtlo.zip
+VJ=$(find "$BASE" -maxdepth 4 -type f -name version.json -print -quit)
+if [ -n "$VJ" ]; then
+jq '.installation="android"' "$VJ" > "$VJ.tmp" && mv "$VJ.tmp" "$VJ" || { echo "Не удалось обновить version.json"; rm -f "$VJ.tmp"; exit 1; }
+else
+echo "Предупреждение: version.json не найден"
+fi
 APP_DIR=$(dirname "$(find "$BASE" -maxdepth 3 -type d -name public -print -quit)")
 if [ "$APP_DIR" = "." ] || [ ! -d "$APP_DIR" ]; then
 echo "Не найдена папка с public. Содержимое:"
